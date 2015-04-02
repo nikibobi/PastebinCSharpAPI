@@ -33,7 +33,10 @@ namespace PastebinAPI
             paste.ExpireDate = exdate != 0 ? Utills.GetDate(exdate) : paste.CreateDate;
             paste.Expiration = Expiration.FromTimeSpan(paste.ExpireDate - paste.CreateDate);
             paste.Visibility = (Visibility)(int)xpaste.Element("paste_private");
-            paste.Language = Language.Parse(xpaste.Element("paste_format_short").Value);
+
+            if (xpaste.Elements("paste_format_short").Any())
+                paste.Language = Language.Parse(xpaste.Element("paste_format_short").Value);
+
             paste.Url = xpaste.Element("paste_url").Value;
             paste.Hits = (int)xpaste.Element("paste_hits");
             return paste;
