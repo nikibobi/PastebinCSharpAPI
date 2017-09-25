@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PastebinAPI
-{
-    public class PastebinException : Exception
-    {
-        public enum ParameterType
-        {
+namespace PastebinAPI {
+    public class PastebinException : Exception {
+        public enum ParameterType {
             None,
             DevKey,
             ExpireDate,
@@ -19,7 +16,7 @@ namespace PastebinAPI
             PostParameters
         }
 
-        private static Dictionary<string, ParameterType> parameters = new Dictionary<string, ParameterType>
+        private static readonly Dictionary<string, ParameterType> parameters = new Dictionary<string, ParameterType>
         {
             {"", ParameterType.None},
             { "api_dev_key", ParameterType.DevKey },
@@ -36,16 +33,12 @@ namespace PastebinAPI
         public ParameterType Parameter { get; private set; }
 
         public PastebinException(string message)
-            :this(message, null)
-        {
+            : this(message, null) {
         }
 
         public PastebinException(string message, Exception innerException)
-            : base(message, innerException)
-        {
-            if (message.Contains("Bad API request, invalid "))
-                Parameter = parameters[message.Replace("Bad API request, invalid ", "")];
-            else Parameter = parameters[""];
+            : base(message, innerException) {
+            Parameter = message.Contains("Bad API request, invalid ") ? parameters[message.Replace("Bad API request, invalid ", "")] : parameters[""];
         }
     }
 }

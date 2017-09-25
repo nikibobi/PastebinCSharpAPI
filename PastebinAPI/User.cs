@@ -1,14 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Linq;
 
-namespace PastebinAPI
-{
-    public class User
-    {
+namespace PastebinAPI {
+    public class User {
         private readonly string userKey;
 
-        internal User(string userKey)
-        {
+        internal User(string userKey) {
             this.userKey = userKey;
         }
 
@@ -28,12 +25,13 @@ namespace PastebinAPI
         /// Creates a new paste from this user and uploads it to pastebin.
         /// To create anonymous paste use Paste.Create() or User.Guest.CreatePaste()
         /// </summary>
+        /// <param name="text">Text of new paste</param>
+        /// <param name="title">Title of new paste</param>
         /// <param name="language">If left out then user's PreferedLanguage will be used</param>
         /// <param name="visibility">If left out then user's PreferedVisibility will be used</param>
         /// <param name="expiration">If left out then user's PreferedExpiration will be used</param>
         /// <returns>Paste object containing the Url given from Pastebin</returns>
-        public Paste CreatePaste(string text, string title = null, Language language = null, Visibility? visibility = null, Expiration expiration = null)
-        {
+        public Paste CreatePaste(string text, string title = null, Language language = null, Visibility? visibility = null, Expiration expiration = null) {
             return Paste.Create(userKey, text, title, language ?? PreferedLanguage, visibility ?? PreferedVisibility, expiration ?? PreferedExpiration);
         }
 
@@ -42,15 +40,14 @@ namespace PastebinAPI
         /// </summary>
         /// <param name="resultsLimit">limits the paste count</param>
         /// <returns>Enumerable of pastes of this user</returns>
-        public IEnumerable<Paste> ListPastes(int resultsLimit = 50)
-        {
+        public IEnumerable<Paste> ListPastes(int resultsLimit = 50) {
             var result = Utills.PostRequest(Utills.URL_API,
                                             "api_dev_key=" + Pastebin.DevKey,
                                             "api_user_key=" + userKey,
                                             "api_results_limit=" + resultsLimit,
                                             "api_option=" + "list");
 
-            if (result.Contains(Utills.ERROR))
+            if(result.Contains(Utills.ERROR))
                 throw new PastebinException(result);
 
             return Utills.PastesFromXML(result);
@@ -59,29 +56,27 @@ namespace PastebinAPI
         /// <summary>
         /// Deletes a paste created by this user
         /// </summary>
-        public void DeletePaste(Paste paste)
-        {
+        public void DeletePaste(Paste paste) {
             var result = Utills.PostRequest(Utills.URL_API,
                                             "api_dev_key=" + Pastebin.DevKey,
                                             "api_user_key=" + userKey,
                                             "api_paste_key=" + paste.Key,
                                             "api_option=" + "delete");
 
-            if (result.Contains(Utills.ERROR))
+            if(result.Contains(Utills.ERROR))
                 throw new PastebinException(result);
         }
 
         /// <summary>
         /// Updates user preferences information properties
         /// </summary>
-        public void RequestPreferences()
-        {
+        public void RequestPreferences() {
             var result = Utills.PostRequest(Utills.URL_API,
                                             "api_dev_key=" + Pastebin.DevKey,
                                             "api_user_key=" + userKey,
                                             "api_option=" + "userdetails");
 
-            if (result.Contains(Utills.ERROR))
+            if(result.Contains(Utills.ERROR))
                 throw new PastebinException(result);
 
             /* Example user xml
@@ -108,8 +103,7 @@ namespace PastebinAPI
             IsPro = xuser.Element("user_account_type").Value == "1";
         }
 
-        public override string ToString()
-        {
+        public override string ToString() {
             return Name;
         }
     }

@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 
-namespace PastebinAPI
-{
-    public class Language
-    {
+namespace PastebinAPI {
+    public class Language {
         #region Languages
         // ReSharper disable InconsistentNaming
         public static Language _4CS { get { return Languages["4cs"]; } }
@@ -229,12 +227,11 @@ namespace PastebinAPI
         public static Language ZXBasic { get { return Languages["zxbasic"]; } }
         // ReSharper restore InconsistentNaming
         #endregion
-        public static Language Default { get { return None; } }
-        public static IEnumerable<Language> All { get { return Languages.Values; } }
+        public static Language Default => None;
+        public static IEnumerable<Language> All => Languages.Values;
 
         private static readonly Dictionary<string, Language> Languages;
-        static Language()
-        {
+        static Language() {
             Languages = (new[] { "4cs",
                                     "6502acme",
                                     "6502kickass",
@@ -456,20 +453,18 @@ namespace PastebinAPI
                                     "zxbasic" }).ToDictionary(s => s, s => new Language(s));
         }
 
-        public static Language Parse(string s)
-        {
+        public static Language Parse(string s) {
             Language result;
-            if (s == null)
-                throw new ArgumentNullException("s");
-            if (TryParse(s, out result) == false)
-                throw new FormatException(string.Format("Format: {0} is not supported", s));
+            if(s == null)
+                throw new ArgumentNullException(nameof(s));
+            if(TryParse(s, out result) == false)
+                throw new FormatException($"Format: {s} is not supported");
             return result;
         }
 
-        public static bool TryParse(string s, out Language result)
-        {
+        public static bool TryParse(string s, out Language result) {
             result = Default;
-            if (s == null || Languages.ContainsKey(s) == false)
+            if(s == null || Languages.ContainsKey(s) == false)
                 return false;
             result = Languages[s];
             return true;
@@ -477,13 +472,11 @@ namespace PastebinAPI
 
         private readonly string value;
 
-        private Language(string value)
-        {
+        private Language(string value) {
             this.value = value;
         }
 
-        public override string ToString()
-        {
+        public override string ToString() {
             return value;
         }
     }
