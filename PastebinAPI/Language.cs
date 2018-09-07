@@ -7,7 +7,7 @@ namespace PastebinAPI
     public class Language
     {
         #region Languages
-        #pragma warning disable IDE1006 // Naming Styles
+#pragma warning disable IDE1006 // Naming Styles
         public static Language _4CS { get { return Languages["4cs"]; } }
         public static Language _6502ACMECrossAssembler { get { return Languages["6502acme"]; } }
         public static Language _6502KickAssembler { get { return Languages["6502kickass"]; } }
@@ -106,6 +106,7 @@ namespace PastebinAPI
         public static Language Java5 { get { return Languages["java5"]; } }
         public static Language JavaScript { get { return Languages["javascript"]; } }
         public static Language jQuery { get { return Languages["jquery"]; } }
+        public static Language Json { get { return Languages["json"]; } }
         public static Language KiXtart { get { return Languages["kixtart"]; } }
         public static Language Latex { get { return Languages["latex"]; } }
         public static Language LDIF { get { return Languages["ldif"]; } }
@@ -227,7 +228,7 @@ namespace PastebinAPI
         public static Language YAML { get { return Languages["yaml"]; } }
         public static Language Z80Assembler { get { return Languages["z80"]; } }
         public static Language ZXBasic { get { return Languages["zxbasic"]; } }
-        #pragma warning restore IDE1006 // Naming Styles
+#pragma warning restore IDE1006 // Naming Styles
         // ReSharper restore InconsistentNaming
         #endregion
         public static Language Default { get { return None; } }
@@ -334,6 +335,7 @@ namespace PastebinAPI
                                     "java5",
                                     "javascript",
                                     "jquery",
+                                    "json",
                                     "kixtart",
                                     "latex",
                                     "ldif",
